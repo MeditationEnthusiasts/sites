@@ -1,0 +1,8 @@
+pretzel: 
+    engine: razor
+
+# Site settings
+author: Meditation Enthusiasts
+title: Meditation Enthusiast's Websites
+url: https://sites.meditationenthusiasts.org/sites/
+contact: seth@meditationenthusiasts.org
