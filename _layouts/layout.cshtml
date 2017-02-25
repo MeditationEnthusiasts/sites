@@ -1,58 +1,6 @@
 @using System
 @using System.Collections.Generic
 @using System.Text
-
-@functions
-{
-    // Helpers that convert our bag for us.
-
-    public string Author;
-    public string LogoUrl;
-    public string Name;
-    public string RssUrl;
-    public string SiteDescription;
-    public string Url;
- 
-    public string Facebook;
-    public string GooglePlus;
-    public string Tumblr;
-    public string Twitter;
-    public string YouTube;
-
-    public void InitValue( string key, ref string var )
-    {
-        if( Model.Bag.ContainsKey( key ) )
-        {
-            var = Model.Bag[key].ToString();
-        }
-        else
-        {
-            var = string.Empty;
-        }
-    }
-
-    public void Init()
-    {
-        InitValue( "author", ref Author );
-        InitValue( "logourl", ref LogoUrl );
-        InitValue( "name", ref Name );
-        InitValue( "rss", ref RssUrl );
-        InitValue( "sitedescription", ref SiteDescription );
-        InitValue( "url", ref this.Url );
-
-
-        InitValue( "facebook", ref Facebook );
-        InitValue( "googleplus", ref GooglePlus );
-        InitValue( "tumblr", ref Tumblr );
-        InitValue( "twitter", ref Twitter );
-        InitValue( "youtube", ref YouTube );
-    }
-}
-
-@{ 
-    Init();
-}
-
 @using Pretzel.Logic.Templating.Context
 @using Page = Pretzel.Logic.Templating.Context.Page
     
@@ -73,26 +21,26 @@
     
 
     <!-- BOOTSTRAP STYLES-->
-    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
     
 
-        <!-- FONTAWESOME STYLES-->
-    <link href="css/font-awesome.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="/css/font-awesome.css" rel="stylesheet" />
     
 
-        <!--CUSTOM BASIC STYLES-->
-    <link href="css/basic.css" rel="stylesheet" />
+    <!--CUSTOM BASIC STYLES-->
+    <link href="/css/basic.css" rel="stylesheet" />
     
 
-        <!--CUSTOM MAIN STYLES-->
-    <link href="css/custom.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="/css/custom.css" rel="stylesheet" />
     
 
-        <!-- GOOGLE FONTS-->
+    <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     
 
-    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="shortcut icon" href="/img/favicon.ico" />
     
 
 </head>
@@ -111,13 +59,6 @@
                 </button>
                 <a class="navbar-brand" href="index.html">Meditation Enthusiasts Sites</a>
             </div>
-
-            <!-- Right-buttons -->
-            <div class="header-right"> <!-- Right-buttons -->
-                <a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
-                <a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
-                <a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
-            </div>
         </nav>
 
         <!-- Side Bar -->
@@ -127,7 +68,7 @@
                     <li>
                         <!-- User Image -->
                         <div class="user-img-div">
-                            <img src="assets/img/user.png" class="img-thumbnail" />
+                            <img src="/assets/img/user.png" class="img-thumbnail" />
 
                             <div class="inner-text">
                                 Jhon Deo Alex
@@ -175,33 +116,13 @@
 
         <!-- Main Page -->
         <div id="page-wrapper">
-
-            <!-- Title -->
-            <div id="page-inner">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">@Name</h1>
-                        <h1 class="page-subhead-line">@SiteDescription</h1>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div>
-                            @Raw( Model.Content )
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            @Raw( Model.Content )
         </div>
-
     </div>
 
     <!-- Footer -->
     <div id="footer-sec">
-        &copy; @DateTime.Now.Year <a href="https://meditationenthusiasts.org">>Meditation Enthusiasts</a> | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+        &copy; @DateTime.Now.Year <a href="https://meditationenthusiasts.org">Meditation Enthusiasts</a> | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
     </div>
 </body>
 </html>

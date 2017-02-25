@@ -1,0 +1,81 @@
+﻿---
+layout: layout
+---
+@functions
+{
+    // Helpers that convert our bag for us.
+
+    public string Author;
+    public string LogoUrl;
+    public string RssUrl;
+    public string Url;
+
+    public string Facebook;
+    public string GooglePlus;
+    public string Tumblr;
+    public string Twitter;
+    public string YouTube;
+
+    public void InitValue( string key, ref string var )
+    {
+        if( Model.Bag.ContainsKey( key ) )
+        {
+            var = Model.Bag[key].ToString();
+        }
+        else
+        {
+            var = string.Empty;
+        }
+    }
+
+    public void Init()
+    {
+        InitValue( "author", ref Author );
+        InitValue( "logourl", ref LogoUrl );
+        InitValue( "rss", ref RssUrl );
+        InitValue( "url", ref this.Url );
+
+
+        InitValue( "facebook", ref Facebook );
+        InitValue( "googleplus", ref GooglePlus );
+        InitValue( "tumblr", ref Tumblr );
+        InitValue( "twitter", ref Twitter );
+        InitValue( "youtube", ref YouTube );
+    }
+}
+
+@{
+    Init();
+}
+
+@using Pretzel.Logic.Templating.Context
+@using Page = Pretzel.Logic.Templating.Context.Page
+
+
+@inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
+
+<!-- Title -->
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">@Model.Page.Title</h1>
+        </div>
+    </div>
+
+    <!-- Right-buttons -->
+    <div class="header-right">
+        <!-- Right-buttons -->
+        <a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
+        <a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
+        <a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                @Raw( Model.Content )
+            </div>
+        </div>
+    </div>
+</div>

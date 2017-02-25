@@ -1,0 +1,27 @@
+﻿---
+layout: layout
+---
+
+@using Pretzel.Logic.Templating.Context
+@using Page = Pretzel.Logic.Templating.Context.Page
+
+
+@inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
+
+<!-- Title -->
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">@Model.Page.Title</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                @Raw( Model.Content )
+            </div>
+        </div>
+    </div>
+</div>
