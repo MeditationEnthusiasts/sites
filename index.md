@@ -1,6 +1,9 @@
 ---
 layout : layout
-title : Wiki Home
+title : Home
+name: Meditation Enthusaists Sites
+sitedescription: Sites created by meditation enthusiasts!
+url: https://sites.meditationenthusiasts.org/sites
 ---
 
 ## Welcome to your pretzel Wiki

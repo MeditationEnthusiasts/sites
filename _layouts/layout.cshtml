@@ -1,167 +1,207 @@
 @using System
 @using System.Collections.Generic
-@using System.Linq
 @using System.Text
-@using Pretzel.Logic.Templating.Context
-@using Page = Pretzel.Logic.Templating.Context.Page
-@inherits RazorEngine.Templating.TemplateBase<PageContext>
-@functions {
 
-    static string WriteOutContents(PageContext context, IEnumerable<Page> pages, string path)
+@functions
+{
+    // Helpers that convert our bag for us.
+
+    public string Author;
+    public string LogoUrl;
+    public string Name;
+    public string RssUrl;
+    public string SiteDescription;
+    public string Url;
+ 
+    public string Facebook;
+    public string GooglePlus;
+    public string Tumblr;
+    public string Twitter;
+    public string YouTube;
+
+    public void InitValue( string key, ref string var )
     {
-        var level = path.Count(c=>c=='/');
-        var indent = string.Empty.PadLeft(((level - 1) * 4)) + "                        ";
-        var sb = new StringBuilder();
-        var allPagesUnderPath = pages
-            .Where(p => p.Url.StartsWith(path))
-            .ToArray();
-
-        var pathPages = allPagesUnderPath
-            .Where(p => !p.Url.Substring(path.Length + 1).Contains("/"))
-            .ToArray();
-        var pathDirectories = allPagesUnderPath
-            .Except(pathPages)
-            .Select(p => p.Url.Substring(path.Length).Split(new[] {"/"}, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault())
-            .Where(s => !string.IsNullOrEmpty(s))
-            .Distinct();
-
-        var headerTitle = path.TrimEnd('/').Split('/').Last();
-        var menuId = headerTitle.Replace(" ", string.Empty) + "Menu";
-
-        if (path != "/")
+        if( Model.Bag.ContainsKey( key ) )
         {
-            sb.Append(indent);
-            sb.Append("<li style=\"margin-left: " + (level - 2) * 10 +"px\" class=\"nav-header");
-            var indexPage = (path + "index.html").ToLower();
-            if (indexPage == context.Page.Url.ToLower())
-                sb.Append(" active");
-            sb.Append("\">");            
-            sb.Append("<a href=\"#\" class=\"menu-toggle\" data-toggle=\"collapse\" data-target=\"." + menuId + "\"><i class=\"icon-angle-down\"></i></a>");
-            sb.Append("<a href=\"" + indexPage + "\">");
-            sb.Append(headerTitle);
-            sb.Append("</a>");
-            sb.AppendLine("</li>");
+            var = Model.Bag[key].ToString();
         }
-        foreach (var pathPage in pathPages.OrderBy(p=> p.Bag.ContainsKey("order") ? p.Bag["order"] : p.Title))
+        else
         {
-            if (pathPage.Url.ToLower().EndsWith("index.html"))continue;
-            var isSelected = pathPage.Url.ToLower() == context.Page.Url.ToLower();
-            var itemInLevelSelected = pathPages.Any(p=>p.Url.ToLower() == context.Page.Url.ToLower());
-            sb.Append(indent);
-            sb.Append("    ");
-            sb.Append("<li style=\"margin-left: " + (level - 1) * 20 +"px\" class=\"");
-            if (!itemInLevelSelected && level != 1)
-                sb.Append("collapse ");
-            sb.Append(menuId);
-            if (isSelected)
-                sb.Append(" active");
-            sb.Append("\">");
-            sb.Append(string.Format("<a href=\"{0}\">{1}</a>", pathPage.Url, pathPage.Title));
-            sb.AppendLine("</li>");
+            var = string.Empty;
         }
-        
-        foreach (var pathDirectory in pathDirectories)
-        {
-            var newPath = path.TrimEnd('/') + "/" + pathDirectory + "/";
-            sb.Append(WriteOutContents(context, allPagesUnderPath, newPath));
-        }
-        
-        return sb.ToString();
+    }
+
+    public void Init()
+    {
+        InitValue( "author", ref Author );
+        InitValue( "logourl", ref LogoUrl );
+        InitValue( "name", ref Name );
+        InitValue( "rss", ref RssUrl );
+        InitValue( "sitedescription", ref SiteDescription );
+        InitValue( "url", ref this.Url );
+
+
+        InitValue( "facebook", ref Facebook );
+        InitValue( "googleplus", ref GooglePlus );
+        InitValue( "tumblr", ref Tumblr );
+        InitValue( "twitter", ref Twitter );
+        InitValue( "youtube", ref YouTube );
     }
 }
-@* ReSharper disable Html.PathError *@
-<!DOCTYPE>
-<html>
-    <head>
-        <meta content="en-au" http-equiv="Content-Language" />
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE; chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-        <title>@Model.Title</title>
+@{ 
+    Init();
+}
 
-        <link href="/css/default.css" rel="stylesheet">
-        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-        <link href="/css/style.css" rel="stylesheet">
-        <link rel="shortcut icon" href="/img/favicon.ico" />
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-            <!--[if lt IE 9]>
-          <script src="../assets/js/html5shiv.js"></script>
-        <![endif]-->
-
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container-fluid">
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                <a class="brand" href="/">Wiki</a>
-                  <div class="nav-collapse collapse pull-right">
-                  <ul class="nav">
-                      <li><a href="#" class="navbar-link" target="_blank">Link</a></li>
-                    </ul>
-                  </div><!--/.nav-collapse -->
-                </div>
-            </div>
-          </div>
+@using Pretzel.Logic.Templating.Context
+@using Page = Pretzel.Logic.Templating.Context.Page
     
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span3">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
-                            <li class="nav-header">Contents</li>
-                            @Raw(WriteOutContents(Model, Model.Site.Pages.Where(p => !(p is NonProcessedPage)).OrderBy(p => p.Url), "/").Trim())
+
+@inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
+    
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta content="en-us" http-equiv="Content-Language" />
+    
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    
+
+    <title>@Model.Title</title>
+    
+
+    <!-- BOOTSTRAP STYLES-->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    
+
+        <!-- FONTAWESOME STYLES-->
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    
+
+        <!--CUSTOM BASIC STYLES-->
+    <link href="css/basic.css" rel="stylesheet" />
+    
+
+        <!--CUSTOM MAIN STYLES-->
+    <link href="css/custom.css" rel="stylesheet" />
+    
+
+        <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    
+
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    
+
+</head>
+<body>
+    
+    <div id="wrapper">
+        <!-- Top row -->
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <!-- Top-left -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Meditation Enthusiasts Sites</a>
+            </div>
+
+            <!-- Right-buttons -->
+            <div class="header-right"> <!-- Right-buttons -->
+                <a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
+                <a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
+                <a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+            </div>
+        </nav>
+
+        <!-- Side Bar -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <!-- User Image -->
+                        <div class="user-img-div">
+                            <img src="assets/img/user.png" class="img-thumbnail" />
+
+                            <div class="inner-text">
+                                Jhon Deo Alex
+                                <br />
+                                <small>Last Login : 2 Weeks Ago </small>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="index.html"><i class="fa fa-dashboard "></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-desktop "></i>UI Elements <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="panel-tabs.html"><i class="fa fa-toggle-on"></i>Tabs & Panels</a>
+                            </li>
+                            <li>
+                                <a href="notification.html"><i class="fa fa-bell "></i>Notifications</a>
+                            </li>
+                            <li>
+                                <a href="progress.html"><i class="fa fa-circle-o "></i>Progressbars</a>
+                            </li>
+                            <li>
+                                <a href="buttons.html"><i class="fa fa-code "></i>Buttons</a>
+                            </li>
+                            <li>
+                                <a href="icons.html"><i class="fa fa-bug "></i>Icons</a>
+                            </li>
+                            <li>
+                                <a href="wizard.html"><i class="fa fa-bug "></i>Wizard</a>
+                            </li>
+                            <li>
+                                <a href="typography.html"><i class="fa fa-edit "></i>Typography</a>
+                            </li>
+                            <li>
+                                <a href="grid.html"><i class="fa fa-eyedropper "></i>Grid</a>
+                            </li>
                         </ul>
-                    </div><!--/.well -->
-                </div><!--/span-->
-                <div class="span9">
-                    <div class="entry-container">
-                        <div class="entry">
-                            <h1>@Model.Title</h1>
-                            <span class="postdate">@Model.Page.Date.ToString("d MMM, yyyy")</span>
-                            <ul>
-                                @foreach (var tag in Model.Page.Tags)
-                                {
-                                <li><a href="/tag/@tag">@tag</a></li>
-                                }
-                            </ul>
-                            @Raw(Model.Content)
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Page -->
+        <div id="page-wrapper">
+
+            <!-- Title -->
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">@Name</h1>
+                        <h1 class="page-subhead-line">@SiteDescription</h1>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            @Raw( Model.Content )
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="row-fluid">
-                <div id="disqus_thread"></div>
-                <script type="text/javascript">
-                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                    var disqus_shortname = ''; // required: replace example with your forum shortname
-                    
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function () {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            <hr>
+        </div>
 
-            <footer>
-                <p>&copy; 2013</p>
-            </footer>
+    </div>
 
-        </div><!--/.fluid-container-->
-
-        <script src="//code.jquery.com/jquery.js"></script>
-        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    </body>
+    <!-- Footer -->
+    <div id="footer-sec">
+        &copy; @DateTime.Now.Year <a href="https://meditationenthusiasts.org">>Meditation Enthusiasts</a> | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+    </div>
+</body>
 </html>
-@* ReSharper restore Html.PathError *@
