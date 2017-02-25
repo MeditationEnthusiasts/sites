@@ -7,3 +7,8 @@ packages/
 _site
 .pretzel/
 public/
+feed.xml
+globalatomfeed.xml
+globalrssfeed.xml
+
+output.txt

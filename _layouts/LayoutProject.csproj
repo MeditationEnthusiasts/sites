@@ -102,6 +102,15 @@
   <ItemGroup>
     <Content Include="layout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="page.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="site.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="browse.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
