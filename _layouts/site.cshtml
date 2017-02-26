@@ -1,6 +1,7 @@
 ﻿---
 layout: layout
 ---
+
 @functions
 {
     // Helpers that convert our bag for us.
@@ -8,7 +9,7 @@ layout: layout
     public string Author;
     public string LogoUrl;
     public string RssUrl;
-    public string Url;
+    public string SiteUrl;
 
     public string Facebook;
     public string GooglePlus;
@@ -33,7 +34,7 @@ layout: layout
         InitValue( "author", ref Author );
         InitValue( "logourl", ref LogoUrl );
         InitValue( "rss", ref RssUrl );
-        InitValue( "url", ref this.Url );
+        InitValue( "url", ref SiteUrl );
 
 
         InitValue( "facebook", ref Facebook );
@@ -50,7 +51,9 @@ layout: layout
 
 @using Pretzel.Logic.Templating.Context
 @using Page = Pretzel.Logic.Templating.Context.Page
-
+@using System.IO;
+@using System.Xml;
+@using System.ServiceModel.Syndication;
 
 @inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
 
@@ -63,8 +66,11 @@ layout: layout
     </div>
 
     <!-- Right-buttons -->
-    <div class="page-subhead-line header-right row">
+    <div class="page-subhead-line header-right">
         <!-- Right-buttons -->
+
+        <a href="@SiteUrl" class="btn btn-success" title="Visit Site"><i class="fa fa-send fa-2x"></i>Visit Site</a>
+
         @if( string.IsNullOrEmpty( Facebook ) == false )
         {
             <a href="@Facebook" class="btn btn-primary" title="Facebook"><i class="fa fa-facebook fa-2x"></i></a>
@@ -91,15 +97,75 @@ layout: layout
     @if( string.IsNullOrEmpty( LogoUrl ) == false )
     {
         <div>
-            <img src="@LogoUrl" alt="Site Logo" />
+            <a href="@SiteUrl"><img src="@LogoUrl" alt="Site Logo" /></a>
         </div>
     }
 
     <!-- Main Content -->
     <div class="row">
         <div class="col-md-12">
-            <div>
-                @Raw( Model.Content )
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    About Website:
+                </div>
+                <div class="panel-body">
+                    @Raw( Model.Content )
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RSS Feed -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Latest Posts:
+                </div>
+                <div class="panel-body">
+                    @{
+                        try
+                        {
+                            string feedPath = Path.Combine( Path.GetDirectoryName( Model.Page.File ), "feed.xml" );
+                            if( File.Exists( feedPath ) )
+                            {
+                                SyndicationFeed feed = null;
+
+                                using( XmlReader reader = XmlReader.Create( feedPath ) )
+                                {
+                                    feed = SyndicationFeed.Load( reader );
+                                }
+
+                                @:<ul class="media-list">
+                                foreach( SyndicationItem item in feed.Items )
+                                {
+                                    <text>
+                                      <li class="media">
+                                          <div class="media-body">
+                                              <h4 class="media-heading"><a href="@(item.Links[0].Uri)">@(item.Title.Text)</a></h4>
+                                              <h5 class="media-heading">@(item.PublishDate)</h5>
+                                              <p>
+                                                  @(Raw( System.Net.WebUtility.HtmlDecode( item.Summary.Text ) ))
+                                              </p>
+                                          </div>
+                                      </li>
+                                    </text>
+                                }
+                                @:</ul>
+
+                            }
+                            else
+                            {
+                                @:No RSS Feed Provided, please visit site to see latest posts.
+                            }
+                        }
+                        catch( Exception )
+                        {
+                            @:An error occurred when trying to load the RSS feed.  Please <a href="/report.html">report</a> this site for reason
+                            @: &quot;Broken RSS Feed&quot;
+                        }
+                    }
+                </div>
             </div>
         </div>
     </div>
