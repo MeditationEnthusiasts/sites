@@ -63,12 +63,37 @@ layout: layout
     </div>
 
     <!-- Right-buttons -->
-    <div class="header-right">
+    <div class="page-subhead-line header-right row">
         <!-- Right-buttons -->
-        <a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
-        <a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
-        <a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+        @if( string.IsNullOrEmpty( Facebook ) == false )
+        {
+            <a href="@Facebook" class="btn btn-primary" title="Facebook"><i class="fa fa-facebook fa-2x"></i></a>
+        }
+        @if( string.IsNullOrEmpty( Twitter ) == false )
+        {
+            <a href="@Twitter" class="btn btn-info" title="Twitter"><i class="fa fa-twitter fa-2x"></i></a>
+        }
+        @if( string.IsNullOrEmpty( YouTube ) == false )
+        {
+            <a href="@YouTube" class="btn btn-danger" title="YouTube"><i class="fa fa-youtube fa-2x"></i></a>
+        }
+        @if( string.IsNullOrEmpty( GooglePlus ) == false )
+        {
+            <a href="@GooglePlus" class="btn btn-warning" title="Google+"><i class="fa fa-google-plus fa-2x"></i></a>
+        }
+        @if( string.IsNullOrEmpty( Tumblr ) == false )
+        {
+            <a href="@Tumblr" class="btn btn-default" title="Tumblr"><i class="fa fa-tumblr fa-2x"></i></a>
+        }
+        <a href="/report.html" class="btn btn-danger" title="Report"><i class="fa fa-exclamation-circle fa-2x"></i> Report</a>
     </div>
+
+    @if( string.IsNullOrEmpty( LogoUrl ) == false )
+    {
+        <div>
+            <img src="@LogoUrl" alt="Site Logo" />
+        </div>
+    }
 
     <!-- Main Content -->
     <div class="row">
