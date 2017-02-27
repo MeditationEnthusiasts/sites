@@ -12,3 +12,5 @@ globalatomfeed.xml
 globalrssfeed.xml
 
 output.txt
+
+_plugins/System.ServiceModel.dll
