@@ -1,12 +1,17 @@
 ---
 layout : page
-title : Meditation Enthusaists Sites
+title : Meditation Enthusiasts Sites
 ---
 
-## Welcome to your pretzel Wiki
+## Welcome to Meditation Enthusiasts Sites!
 
-Simply create folders, and .md files in your pretzel site, and the layout will automatically build a wiki content tree for you
+Meditation Enthusiasts Sites is a collection of sites related to Meditation, Yoga, Buddhism, etc.  Sites are submitted by site owners.
 
-Use `order: X` in your yaml front matter to order files.
+Sites get their own page, which contains a description of the site, links to the site, links to social media, and links to the most recent posts, etc.
 
-Each folder should contain an index.md file
+All sites that provide an RSS or ATOM feed will also be added to our Global RSS feeds.  The Global RSS is an RSS or ATOM feed that contains posts from ALL of the submitted sites.
+
+Interested in finding more Meditation, Yoga, or Buddhism sites?  [Start Browsing!](/browse/)
+
+Have a site you wish to submit?  Visit our [FAQ](/submit/faqs.html) and then [submit](/submit/) your site.
+
