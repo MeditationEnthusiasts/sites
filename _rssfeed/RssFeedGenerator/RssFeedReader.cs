@@ -1,3 +1,4 @@
+
 //          Copyright Seth Hendrick 2017.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace RssFeedGenerator
@@ -26,6 +28,14 @@ namespace RssFeedGenerator
             @"---*\s+.+rss:\s*(?<rssUrl>[^\s]+)\s+.+---*",
             RegexOptions.Compiled | RegexOptions.Singleline
         );
+
+        private const string userAgent = "Meditation Enthusiasts Sites RSS Reader";
+
+        /// <summary>
+        /// Max size is 1MB.  Anything bigger and we may have someone trying to
+        /// fill our server.
+        /// </summary>
+        private const int maxFileSize = 1 * 1000 * 1000;
 
         // ---------------- Constructor ----------------
 
@@ -71,8 +81,21 @@ namespace RssFeedGenerator
                 {
                     using( WebClient client = new WebClient() )
                     {
-                        string rssContents = client.DownloadString( profile.Value );
-                        File.WriteAllText( Path.Combine( profile.Key, "feed.xml" ), rssContents );
+                        client.Headers.Add( "user-agent", userAgent );
+
+                        client.DownloadProgressChanged += delegate ( object sender, DownloadProgressChangedEventArgs e )
+                        {
+                            if( e.TotalBytesToReceive >= maxFileSize )
+                            {
+                                client.CancelAsync();
+                                Console.WriteLine( "Web Request Cancelled due to size of {0}", e.TotalBytesToReceive );
+                            }
+                        };
+
+                        Task<string> rssContents = client.DownloadStringTaskAsync( profile.Value );
+                        rssContents.Wait();
+
+                        File.WriteAllText( Path.Combine( profile.Key, "feed.xml" ), rssContents.Result );
                     }
                 }
                 catch( Exception e )
