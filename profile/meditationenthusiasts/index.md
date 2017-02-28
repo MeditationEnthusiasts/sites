@@ -10,6 +10,7 @@ googleplus: https://plus.google.com/117876768528391812008/
 tumblr: http://meditationenthusiasts.tumblr.com/
 twitter: https://twitter.com/xmeditator
 youtube: http://www.youtube.com/user/xmeditator
+github: https://github.com/MeditationEnthusiasts/
 categories : meditation
 ---
 

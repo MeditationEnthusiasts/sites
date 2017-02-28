@@ -13,6 +13,7 @@ layout: layout
 
     public string Facebook;
     public string GooglePlus;
+    public string GitHub;
     public string Tumblr;
     public string Twitter;
     public string YouTube;
@@ -39,6 +40,7 @@ layout: layout
 
         InitValue( "facebook", ref Facebook );
         InitValue( "googleplus", ref GooglePlus );
+        InitValue( "github", ref GitHub );
         InitValue( "tumblr", ref Tumblr );
         InitValue( "twitter", ref Twitter );
         InitValue( "youtube", ref YouTube );
@@ -71,6 +73,10 @@ layout: layout
 
         <a href="@SiteUrl" class="btn btn-success" title="Visit Site"><i class="fa fa-send fa-2x"></i>Visit Site</a>
 
+        @if( string.IsNullOrEmpty( GitHub ) == false )
+        {
+            <a href="@GitHub" class="btn btn-default" title="default"><i class="fa fa-github fa-2x"></i></a>
+        }
         @if( string.IsNullOrEmpty( Facebook ) == false )
         {
             <a href="@Facebook" class="btn btn-primary" title="Facebook"><i class="fa fa-facebook fa-2x"></i></a>
@@ -140,19 +146,18 @@ layout: layout
                                 foreach( SyndicationItem item in feed.Items )
                                 {
                                     <text>
-                                      <li class="media">
-                                          <div class="media-body">
-                                              <h4 class="media-heading"><a href="@(item.Links[0].Uri)">@(item.Title.Text)</a></h4>
-                                              <h5 class="media-heading">@(item.PublishDate)</h5>
-                                              <p>
-                                                  @(Raw( System.Net.WebUtility.HtmlDecode( item.Summary.Text ) ))
-                                              </p>
-                                          </div>
-                                      </li>
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="@(item.Links[0].Uri)">@(item.Title.Text)</a></h4>
+                                                <h5 class="media-heading">@(item.PublishDate)</h5>
+                                                <p>
+                                                    @(Raw( System.Net.WebUtility.HtmlDecode( item.Summary.Text ) ))
+                                                </p>
+                                            </div>
+                                        </li>
                                     </text>
                                 }
                                 @:</ul>
-
                             }
                             else
                             {
