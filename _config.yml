@@ -1,6 +1,15 @@
 pretzel: 
     engine: razor
 
+tag_pages_layout: tag
+
+exclude:
+    - .git
+    - .gitignore
+    - _rssfeed/
+
+permalink: /profile/:title/
+
 # Site settings
 author: Meditation Enthusiasts
 title: Meditation Enthusiast's Websites

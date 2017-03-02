@@ -2,6 +2,7 @@
 layout : site
 title : Meditation Enthusaists
 author: Seth
+comments: true
 logourl: https://meditationenthusiasts.org/wp-content/uploads/2015/07/xlogosmall.png
 rss: https://www.meditationenthusiasts.org/feed/
 url: https://meditationenthusiasts.org
@@ -12,6 +13,7 @@ twitter: https://twitter.com/xmeditator
 youtube: http://www.youtube.com/user/xmeditator
 github: https://github.com/MeditationEnthusiasts/
 categories : meditation
+tags: [meditation, enthusiasts, seth, xmeditator, open source, live, youtube, music, how-to, meditate, meditating]
 ---
 
 This site is for meditation enthusiasts, by meditation enthusiasts!

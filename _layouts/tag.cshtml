@@ -1,0 +1,43 @@
+﻿---
+layout: layout
+---
+
+@using Pretzel.Logic.Templating.Context
+@using Page = Pretzel.Logic.Templating.Context.Page
+
+
+@inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
+
+@{
+    object tagName = Model.Page.Bag["tag"];
+}
+
+<!-- Title -->
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">Sites Tagged With @tagName</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                @{
+                    foreach( var tag in @Model.Site.Tags )
+                    {
+                        if( tag.Name.Equals( tagName ) )
+                        {
+                            foreach( var post in tag.Posts )
+                            {
+                                @:
+                                <li><a href="@post.Url">@post.Title</a></li>
+                            }
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -3,49 +3,57 @@
 @using System.Text
 @using Pretzel.Logic.Templating.Context
 @using Page = Pretzel.Logic.Templating.Context.Page
-    
-
 @inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
-    
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta content="en-us" http-equiv="Content-Language" />
-    
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    
+    @{ 
+        StringBuilder tagBuilder = new StringBuilder();
+        foreach( string tag in Model.Page.Tags )
+        {
+            tagBuilder.Append( tag + "," );
+        }
+        if( tagBuilder.Length > 0 )
+        {
+            tagBuilder = tagBuilder.Remove( tagBuilder.Length - 1, 1 );
+            @:<meta name="keywords" content="@tagBuilder.ToString()" />
+        }
+    }
+    <meta name="description" content="@Model.Title on Meditation Enthusiasts Sites!" />
 
     <title>@Model.Title</title>
-    
+
 
     <!-- BOOTSTRAP STYLES-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
-    
+
 
     <!-- FONTAWESOME STYLES-->
     <link href="/static/css/font-awesome.css" rel="stylesheet" />
-    
+
 
     <!--CUSTOM BASIC STYLES-->
     <link href="/static/css/basic.css" rel="stylesheet" />
-    
+
 
     <!--CUSTOM MAIN STYLES-->
     <link href="/static/css/custom.css" rel="stylesheet" />
-    
+
 
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    
+
 
     <link rel="shortcut icon" href="/static/img/favicon.ico" />
-    
+
 
 </head>
 <body>
-    
+
     <div id="wrapper">
         <!-- Top row -->
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
