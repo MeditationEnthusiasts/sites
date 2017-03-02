@@ -1,0 +1,43 @@
+﻿---
+layout: layout
+---
+
+@inherits RazorEngine.Templating.TemplateBase<Pretzel.Logic.Templating.Context.PageContext>
+
+<!-- Title -->
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">All Tags:</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                @{
+                    // Iterate through all tags.
+                    foreach( var tag in @Model.Site.Tags )
+                    {
+                        // Find the tag's page
+                        foreach( var page in Model.Site.Pages )
+                        {
+                            if( page.Bag.ContainsKey( "tag" ) )
+                            {
+                                if( tag.Name.Equals( page.Bag["tag"] ) )
+                                {
+                                    <text>
+                                        <li>
+                                            <a href="@(page.Url)">@(tag.Name)</a>
+                                        </li>
+                                    </text>
+                                }
+                            }
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
