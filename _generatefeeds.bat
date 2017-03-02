@@ -1,2 +1,2 @@
-_rssfeed\RssFeedGenerator\bin\Debug\RssFeedGenerator.exe profile .\
+_rssfeed\RssFeedGenerator\bin\Debug\RssFeedGenerator.exe _posts .\
 pause

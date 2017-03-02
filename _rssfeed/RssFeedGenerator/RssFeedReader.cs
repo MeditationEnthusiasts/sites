@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -56,7 +57,9 @@ namespace RssFeedGenerator
             string[] profilePaths = Directory.GetDirectories( this.pathToProfiles );
             foreach( string profile in profilePaths )
             {
-                string fileContents = File.ReadAllText( Path.Combine( profile, "index.md" ) );
+                string profileName = Path.GetFileName( profile );
+
+                string fileContents = File.ReadAllText( Path.Combine( profile, profileName + ".md" ) );
                 Match match = rssRegex.Match( fileContents );
                 if( match.Success )
                 {
@@ -79,6 +82,8 @@ namespace RssFeedGenerator
             {
                 try
                 {
+                    string profileName = Path.GetFileName( profile.Key );
+
                     using( WebClient client = new WebClient() )
                     {
                         client.Headers.Add( "user-agent", userAgent );
@@ -95,7 +100,13 @@ namespace RssFeedGenerator
                         Task<string> rssContents = client.DownloadStringTaskAsync( profile.Value );
                         rssContents.Wait();
 
-                        File.WriteAllText( Path.Combine( profile.Key, "feed.xml" ), rssContents.Result );
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendLine( "---" );
+                        builder.AppendLine( "permalink: /profile/" + profileName + "/feed.xml" );
+                        builder.AppendLine( "---" );
+                        builder.AppendLine( rssContents.Result );
+
+                        File.WriteAllText( Path.Combine( profile.Key, "feed.xml" ), builder.ToString() );
                     }
                 }
                 catch( Exception e )
@@ -120,9 +131,18 @@ namespace RssFeedGenerator
                     Console.WriteLine( "Reading feed for {0}", profile.Key );
 
                     SyndicationFeed feed = null;
-                    using( XmlReader reader = XmlReader.Create( Path.Combine( profile.Key, "feed.xml" ) ) )
+                    string fileName = Path.Combine( profile.Key, "feed.xml" );
+                    using( StringReader strReader = new StringReader( File.ReadAllText( fileName ) ) )
                     {
-                        feed = SyndicationFeed.Load( reader );
+                        // Skip permalink information
+                        strReader.ReadLine(); // ---
+                        strReader.ReadLine(); // permalink: /profile/something/feed.xml
+                        strReader.ReadLine(); // ---
+
+                        using( XmlReader reader = XmlReader.Create( strReader ) )
+                        {
+                            feed = SyndicationFeed.Load( reader );
+                        }
                     }
 
                     int count = 0;
