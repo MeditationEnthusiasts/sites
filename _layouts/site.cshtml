@@ -64,6 +64,25 @@ layout: layout
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-head-line">@Model.Page.Title</h1>
+            <div class="page-subhead-line">
+                <p>Author(s): @Author</p>
+                <p>
+                    Tagged as:
+                    @foreach( string tag in Model.Page.Tags )
+                    {
+                        foreach( var page in Model.Site.Pages )
+                        {
+                            if( page.Bag.ContainsKey( "tag" ) )
+                            {
+                                if( tag.Equals( page.Bag["tag"] ) )
+                                {
+                                    @:<a href="@(page.Url)">@(tag)</a>,
+                                }
+                            }
+                        }
+                    }
+                </p>
+            </div>
         </div>
     </div>
 
