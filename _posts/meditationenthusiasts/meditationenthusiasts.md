@@ -12,7 +12,7 @@ tumblr: http://meditationenthusiasts.tumblr.com/
 twitter: https://twitter.com/xmeditator
 youtube: http://www.youtube.com/user/xmeditator
 github: https://github.com/MeditationEnthusiasts/
-categories : meditation
+category : meditation
 tags: [meditation, enthusiasts, seth, xmeditator, open source, live, youtube, music, how-to, meditate, meditating]
 ---
 

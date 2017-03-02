@@ -23,26 +23,28 @@ layout: layout
         <div class="col-md-12">
             <div>
                 @{
-                    List<Page> pages = new List<Page>();
-                    foreach( Page page in Model.Site.Pages )
+                    List<Page> posts = new List<Page>();
+                    foreach( Page post in Model.Site.Posts )
                     {
-                        if( page.Bag.ContainsKey( "layout" ) && ( page.Layout == "site" ) )
+                        // Only care about our sites.
+                        if( post.Bag.ContainsKey( "layout" ) && ( post.Layout == "site" ) )
                         {
+                            // Grab our browse page's model.  If its all,
+                            // then add all pages.  Else, only add a page
+                            // that matches this browse page's category.
                             if( Model.Page.Bag.ContainsKey( "category" ) )
                             {
                                 if( Model.Page.Bag["category"].Equals( "all" ) )
                                 {
-                                    pages.Add( page );
+                                    posts.Add( post );
                                 }
-                                else if( page.Bag.ContainsKey( "categories" ) )
+                                else
                                 {
-                                    var categories = page.Bag["categories"].ToString().Split();
-
-                                    foreach( var category in categories )
+                                    foreach( string category in post.Categories )
                                     {
                                         if( category.Equals( Model.Page.Bag["category"] ) )
                                         {
-                                            pages.Add( page );
+                                            posts.Add( post );
                                         }
                                     }
                                 }
@@ -50,13 +52,13 @@ layout: layout
                         }
                     }
 
-                    pages = pages.OrderBy( p => p.Title.ToLower() ).ToList();
+                    posts = posts.OrderBy( p => p.Title.ToLower() ).ToList();
 
                     @:<ul>
-                    foreach( Page page in pages )
+                    foreach( Page post in posts )
                     {
                         @:
-                        <li><a href="@page.Url">@page.Title</a></li>
+                        <li><a href="@post.Url">@post.Title</a></li>
                     }
                     @:</ul>
                 }
