@@ -137,9 +137,18 @@ layout: layout
                             {
                                 SyndicationFeed feed = null;
 
-                                using( XmlReader reader = XmlReader.Create( feedPath ) )
+                                string feedContents = File.ReadAllText( feedPath );
+                                using( StringReader feedReader = new StringReader( feedContents ) )
                                 {
-                                    feed = SyndicationFeed.Load( reader );
+                                    // Get rid of permalink information.
+                                    feedReader.ReadLine(); // ---
+                                    feedReader.ReadLine(); // permalink: /profile/something/feed.xml
+                                    feedReader.ReadLine(); // ---
+
+                                    using( XmlReader reader = XmlReader.Create( feedReader ) )
+                                    {
+                                        feed = SyndicationFeed.Load( reader );
+                                    }
                                 }
 
                                 @:<ul class="media-list">
