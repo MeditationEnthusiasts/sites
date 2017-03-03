@@ -35,7 +35,7 @@ layout: layout
         InitValue( "author", ref Author );
         InitValue( "logourl", ref LogoUrl );
         InitValue( "rss", ref RssUrl );
-        InitValue( "url", ref SiteUrl );
+        InitValue( "siteurl", ref SiteUrl );
 
 
         InitValue( "facebook", ref Facebook );
@@ -116,6 +116,11 @@ layout: layout
         {
             <a href="@Tumblr" class="btn btn-default" title="Tumblr"><i class="fa fa-tumblr fa-2x"></i></a>
         }
+        @if( string.IsNullOrEmpty( RssUrl ) == false )
+        {
+            <a href="@RssUrl" class="btn btn-warning" title="Feed"><i class="fa fa-rss fa-2x"></i></a>
+        }
+        <a href="#disqus_thread" class="btn btn-default" title="Comments"><i class="fa fa-comments fa-2x"></i></a>
         <a href="/report.html" class="btn btn-danger" title="Report"><i class="fa fa-exclamation-circle fa-2x"></i> Report</a>
     </div>
 

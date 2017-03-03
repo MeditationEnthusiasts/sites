@@ -5,7 +5,7 @@ author: Seth
 comments: true
 logourl: https://meditationenthusiasts.org/wp-content/uploads/2015/07/xlogosmall.png
 rss: https://www.meditationenthusiasts.org/feed/
-url: https://meditationenthusiasts.org
+siteurl: https://meditationenthusiasts.org
 facebook: https://www.facebook.com/pages/meditation-enthusiasts/143258385684557
 googleplus: https://plus.google.com/117876768528391812008/
 tumblr: http://meditationenthusiasts.tumblr.com/
