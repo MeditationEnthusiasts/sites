@@ -89,11 +89,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\css\basic.css" />
-    <Content Include="..\css\bootstrap.css" />
-    <Content Include="..\css\custom.css" />
-    <Content Include="..\css\font-awesome.css" />
-    <Content Include="..\css\style.css" />
+    <Content Include="..\static\css\basic.css" />
+    <Content Include="..\static\css\bootstrap.css" />
+    <Content Include="..\static\css\custom.css" />
+    <Content Include="..\static\css\font-awesome.css" />
+    <Content Include="..\static\css\style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +110,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="browse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="browsebytag.cshtml" />
+    <Content Include="tag.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

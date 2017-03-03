@@ -223,11 +223,10 @@ body {
 }
 
     #footer-sec a {
-        color:#fff;
+        color:#bbb;
     }
     #footer-sec a:hover,a:focus {
-        color:#fff;
-        text-decoration:none;
+        color:#d00;
     }
 /*==============================================
     MEDIA QUERIES     
