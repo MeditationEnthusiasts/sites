@@ -16,7 +16,7 @@ pages:
         - mono _rssfeed/RssFeedGenerator/bin/Release/RssFeedGenerator.exe ./_posts ./
 
         # Generate Site
-        - ./bootstrap.sh
+        - ./_bootstrap.sh
         - mono .pretzel/Pretzel.exe bake --destination=public --vDir=sites
     artifacts:
         paths:
