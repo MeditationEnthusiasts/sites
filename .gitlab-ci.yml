@@ -17,7 +17,7 @@ pages:
 
         # Generate Site
         - ./_bootstrap.sh
-        - mono .pretzel/Pretzel.exe bake --destination=public --vDir=sites
+        - mono .pretzel/Pretzel.exe bake --destination=public
     artifacts:
         paths:
             - public
