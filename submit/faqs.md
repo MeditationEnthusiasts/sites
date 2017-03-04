@@ -27,6 +27,12 @@ Submitting RSS feeds are optional.  However, your most recent posts will not sho
 
 No.  The copyright is still yours.  The only thing you "give" to us is permission to post links to your site from here, and add your RSS feeds (if you provide it) to our global RSS.
 
+## What's the catch?
+
+There is none.  Submitting your site is completely free.  Seriously.  Your information isn't sold to some strange third party, or anything like that.
+
+I'll be honest, the main reason for creating this site is I'm a software engineer and I wanted to see if I could pull it off; and I wanted to learn more about static website generation.
+
 ## Is this like Spiritual Blogs?
 
 Many years ago, Spiritual Blogs was a site very similar to this run by us.  However, back then it was all WordPress powered, it relied on too many third-party services, had issues, and it wasn't very streamlined.  We retired Spiritual Blogs.  This is its replacement.
