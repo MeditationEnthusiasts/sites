@@ -33,10 +33,6 @@ There is none.  Submitting your site is completely free.  Seriously.  Your infor
 
 I'll be honest, the main reason for creating this site is I'm a software engineer and I wanted to see if I could pull it off; and I wanted to learn more about static website generation.
 
-## Why no https?
-
-We do use https.  However, we host our site on GitLab pages, which currently does not do a 301 redirect to https pages.  They have an open issue [here](https://gitlab.com/gitlab-org/gitlab-ce/issues/28857).  To use https, add an 's' after http in the web address, and hopefully the next version of GitLab pages will force https.
-
 ## Is this like Spiritual Blogs?
 
 Many years ago, Spiritual Blogs was a site very similar to this run by us.  However, back then it was all WordPress powered, it relied on too many third-party services, had issues, and it wasn't very streamlined.  We retired Spiritual Blogs.  This is its replacement.
