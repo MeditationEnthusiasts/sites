@@ -1,0 +1,6 @@
+---
+layout: nil
+exclude_from_navbar: true
+---
+@using Pretzel.Logic.Templating.Context
+@Include( "sitemap.csxml", Model, typeof( PageContext ) )
