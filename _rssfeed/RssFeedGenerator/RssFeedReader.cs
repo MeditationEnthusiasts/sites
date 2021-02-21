@@ -105,7 +105,7 @@ namespace RssFeedGenerator
                         builder.AppendLine( "permalink: /profile/" + profileName + "/feed.xml" );
                         builder.AppendLine( "layout: nil" );
                         builder.AppendLine( "---" );
-                        builder.AppendLine( rssContents.Result );
+                        builder.AppendLine( rssContents.Result.Replace( "@", "@@" ) );
 
                         File.WriteAllText( Path.Combine( profile.Key, "feed.xml" ), builder.ToString() );
                     }
