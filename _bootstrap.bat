@@ -1,2 +1,0 @@
-:: Needed since System.ServiceModel.dll is not included in Pretzel, so we need to load it as a plugin.
-copy "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.ServiceModel.dll" _plugins\System.ServiceModel.dll
