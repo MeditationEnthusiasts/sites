@@ -64,7 +64,7 @@ void BuildPretzel()
         Configuration = "Debug"
     };
 
-    DotNetCoreBuild( "./Sites.sln", settings );
+    DotNetCoreBuild( "./_Sites.sln", settings );
 
     EnsureDirectoryExists( pluginDir );
 

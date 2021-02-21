@@ -1,17 +1,32 @@
 pretzel: 
     engine: razor
 
+category_pages_layout: category
 tag_pages_layout: tag
-
-exclude:
-    - .git
-    - .gitignore
-    - _rssfeed/
 
 permalink: /profile/:title/
 
 # Site settings
 author: Meditation Enthusiasts
 title: Meditation Enthusiast's Websites
-url: https://sites.meditationenthusiasts.org/sites/
+description: Sites about Meditation, Yoga, and Buddhism!
+url: https://sites.meditationenthusiasts.org/
+urlnohttp: sites.meditationenthusiasts.org
 contact: seth@meditationenthusiasts.org
+
+github: https://github.com/MeditationEnthusiasts/sites
+githubissues: https://github.com/MeditationEnthusiasts/sites/issues
+
+disqus_shortname: meditation-enthusiasts-sites
+
+exclude:
+    - .git
+    - .gitignore
+    - _rssfeed/
+    - .tgitconfig
+    - .vs
+    - .vscode
+    - build.cake
+    - tools
+    - Readme.md
+    - _Sites.sln

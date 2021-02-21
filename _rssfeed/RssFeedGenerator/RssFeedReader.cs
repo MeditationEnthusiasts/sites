@@ -103,6 +103,7 @@ namespace RssFeedGenerator
                         StringBuilder builder = new StringBuilder();
                         builder.AppendLine( "---" );
                         builder.AppendLine( "permalink: /profile/" + profileName + "/feed.xml" );
+                        builder.AppendLine( "layout: nil" );
                         builder.AppendLine( "---" );
                         builder.AppendLine( rssContents.Result );
 
@@ -137,6 +138,7 @@ namespace RssFeedGenerator
                         // Skip permalink information
                         strReader.ReadLine(); // ---
                         strReader.ReadLine(); // permalink: /profile/something/feed.xml
+                        strReader.ReadLine(); // layout: nil
                         strReader.ReadLine(); // ---
 
                         using( XmlReader reader = XmlReader.Create( strReader ) )

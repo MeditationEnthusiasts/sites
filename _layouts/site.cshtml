@@ -2,24 +2,18 @@
 layout: layout
 ---
 
-@functions
-{
+@using Pretzel.Logic.Templating.Context;
+@using Page = Pretzel.Logic.Templating.Context.Page;
+@using System.IO;
+@using System.Xml;
+@using System.ServiceModel.Syndication;
+
+@{
     // Helpers that convert our bag for us.
 
-    public string Author;
-    public string LogoUrl;
-    public string RssUrl;
-    public string SiteUrl;
-
-    public string Facebook;
-    public string GooglePlus;
-    public string GitHub;
-    public string Tumblr;
-    public string Twitter;
-    public string YouTube;
-
-    public void InitValue( string key, ref string var )
+    Func<string, string> InitValue = delegate( string key )
     {
+        string var;
         if( Model.Bag.ContainsKey( key ) )
         {
             var = Model.Bag[key].ToString();
@@ -28,34 +22,22 @@ layout: layout
         {
             var = string.Empty;
         }
-    }
 
-    public void Init()
-    {
-        InitValue( "author", ref Author );
-        InitValue( "logourl", ref LogoUrl );
-        InitValue( "rss", ref RssUrl );
-        InitValue( "siteurl", ref SiteUrl );
+        return var;
+    };
 
+    string Author = InitValue( "author" );
+    string LogoUrl = InitValue( "logourl" );
+    string RssUrl = InitValue( "rss" );
+    string SiteUrl = InitValue( "siteurl" );
 
-        InitValue( "facebook", ref Facebook );
-        InitValue( "googleplus", ref GooglePlus );
-        InitValue( "github", ref GitHub );
-        InitValue( "tumblr", ref Tumblr );
-        InitValue( "twitter", ref Twitter );
-        InitValue( "youtube", ref YouTube );
-    }
+    string Facebook = InitValue( "facebook" );
+    string GooglePlus = InitValue( "googleplus" );
+    string GitHub = InitValue( "github" );
+    string Tumblr = InitValue( "tumblr" );
+    string Twitter = InitValue( "twitter" );
+    string YouTube = InitValue( "youtube" );
 }
-
-@{
-    Init();
-}
-
-@using Pretzel.Logic.Templating.Context
-@using Page = Pretzel.Logic.Templating.Context.Page
-@using System.IO;
-@using System.Xml;
-@using System.ServiceModel.Syndication;
 
 <!-- Title -->
 <div id="page-inner">
@@ -68,13 +50,13 @@ layout: layout
                     Tagged as:
                     @foreach( string tag in Model.Page.Tags )
                     {
-                        foreach( var page in Model.Site.Pages )
+                        foreach( var thePage in Model.Site.Pages )
                         {
-                            if( page.Bag.ContainsKey( "tag" ) )
+                            if( thePage.Bag.ContainsKey( "tag" ) )
                             {
-                                if( tag.Equals( page.Bag["tag"] ) )
+                                if( tag.Equals( thePage.Bag["tag"] ) )
                                 {
-                                    @:<a href="@(page.Url)">@(tag)</a>,
+                                    <a href="@thePage.Url">@tag</a>@:,
                                 }
                             }
                         }
@@ -165,6 +147,7 @@ layout: layout
                                     // Get rid of permalink information.
                                     feedReader.ReadLine(); // ---
                                     feedReader.ReadLine(); // permalink: /profile/something/feed.xml
+                                    feedReader.ReadLine(); // layout: nil
                                     feedReader.ReadLine(); // ---
 
                                     using( XmlReader reader = XmlReader.Create( feedReader ) )
@@ -215,19 +198,24 @@ layout: layout
                 </div>
                 <div class="panel-body">
                     <div id="disqus_thread"></div>
-                    <script type="text/javascript">
-                        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                        var disqus_shortname = 'meditation-enthusiasts-sites'; // required: replace example with your forum shortname
-
-                        /* * * DON'T EDIT BELOW THIS LINE * * */
-                        (function () {
-                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                        })();
+                    <script>
+                    /**
+                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    
+                    var disqus_config = function () {
+                        this.page.url = '@Model.Site.Config["url"].ToString()@Model.Page.Url';  // Replace PAGE_URL with your page's canonical URL variable
+                    };
+                    
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://@(Model.Site.Config["disqus_shortname"].ToString()).disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                    })();
                     </script>
-                    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
                 </div>
             </div>
         </div>
