@@ -49,7 +49,7 @@ pipeline
                 {
                     steps
                     {
-                        sh 'dotnet tool update Cake.Tool --tool-path ./Cake'
+                        sh 'dotnet tool update Cake.Tool --version 2.3.0 --tool-path ./Cake'
                         sh './Cake/dotnet-cake ./checkout/build.cake --showdescription'
                     }
                 }
